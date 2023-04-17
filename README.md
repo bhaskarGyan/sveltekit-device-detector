@@ -26,15 +26,17 @@ yarn add sveltekit-device-detector
 Update your `app.d.ts` file to look something like:
 
 ```ts
-import type { DeviceType } from 'sveltekit-device-detector/dist/types';
+import type { DevicePayload } from 'sveltekit-device-detector/dist/types';
 // See https://kit.svelte.dev/docs#typescript
 // for information about these interfaces
 declare namespace App {
 	interface Locals {
-		deviceType: DeviceType;
+		deviceType: DevicePayload;
 	}
 
-	interface PageData {}
+	interface PageData {
+        deviceType: DevicePayload;
+    }
 
 	interface Platform {}
 
