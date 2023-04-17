@@ -1,58 +1,100 @@
-# create-svelte
+## sveltekit-device-detector
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+![npm](https://img.shields.io/npm/dm/sveltekit-device-detector?label=npm%20downloads)
 
-Read more about creating a library [in the docs](https://kit.svelte.dev/docs/packaging).
+Detect device, and render view according to the detected device type.
 
-## Creating a project
 
-If you're seeing this, you've probably already done this step. Congrats!
+## When to use this library
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+This library uses a technique called [user agent sniffing](https://developer.mozilla.org/en-US/docs/Web/HTTP/Browser_detection_using_the_user_agent) to detect device information. That means it works by examining the [User Agent string](https://en.wikipedia.org/wiki/User_agent) given by a browser and comparing it to a list of browser and device names it knows about. This technique works, but [has drawbacks](https://css-tricks.com/browser-detection-is-bad/) and may or may not be the right approach, depending on what you're trying to achieve. If you need to detect a specific browser type (e.g. Chrome, Safari, Internet Explorer) or specific category of device (e.g. all iPods), this library can do that.
 
-# create a new project in my-app
-npm create svelte@latest my-app
+
+
+## Installation
+
+To install, you can use npm or yarn:
+
+```
+npm install sveltekit-device-detector --save
+
+or
+
+yarn add sveltekit-device-detector
 ```
 
-## Developing
+Update your `app.d.ts` file to look something like:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+```ts
+import type { DeviceType } from 'sveltekit-device-detector/dist/types';
+// See https://kit.svelte.dev/docs#typescript
+// for information about these interfaces
+declare namespace App {
+	interface Locals {
+		deviceType: DeviceType;
+	}
 
-```bash
-npm run dev
+	interface PageData {}
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+	interface Platform {}
+
+	interface PrivateEnv {}
+
+	interface PublicEnv {}
+}
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+Create a +layout.server.js file at the root and returning the DeviceType from there.
 
-## Building
 
-To build your library:
-
-```bash
-npm run package
+```js
+/** @type {import('./$types').LayoutServerLoad} */
+export const load = ({ locals }) => {
+	return {
+		deviceType: locals.deviceType 
+	};
+};
 ```
 
-To create a production version of your showcase app:
+You'll now have access to the `deviceType` data by using `$page.data.deviceType` or via the `parent` function from other `+page.server.js` load functions.
 
-```bash
-npm run build
+```svelte
+<script>
+	import { page } from '$app/stores';
+	$: deviceType = $page.data.deviceType;
+</script>
 ```
 
-You can preview the production build with `npm run preview`.
+### Initializing
+> src/hooks.server.ts 
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+```js
+import { handleDeviecDetector } from 'sveltekit-device-detector';
 
-## Publishing
 
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
+// You can do it like this, without passing a own handle function
+export const handle = handleDeviecDetector({});
 
-To publish your library to [npm](https://www.npmjs.com):
+// Or pass your handle function as second argument to handleDeviecDetector
 
-```bash
-npm publish
+export const handle = handleSession({},
+	({ event, resolve }) => {
+		// event.locals is populated with the deviceType `event.locals.deviceType`
+
+		// Do anything you want here
+		return resolve(event);
+	}
+);
 ```
+
+In case you're using [sequence()](https://kit.svelte.dev/docs/modules#sveltejs-kit-hooks-sequence), do this
+
+```js
+const deviceDetector = handleDeviecDetector({});
+export const handle = sequence(deviceDetector, ({ resolve, event }) => {
+	// event.locals is populated with the deviceType `event.locals.deviceType`
+	// Do anything you want here
+	return resolve(event);
+});
+```
+

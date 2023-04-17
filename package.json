@@ -1,6 +1,11 @@
 {
 	"name": "sveltekit-device-detector",
-	"version": "0.0.1",
+	"version": "1.0.1",
+	"license": "MIT",
+	"author": {
+		"name": "Bhaskar Gyan Vardhan"
+	  },
+	  "description": "Detect device type and render your component according to it",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -54,5 +59,30 @@
 	"type": "module",
 	"dependencies": {
 		"ua-parser-js": "^1.0.35"
-	}
+	},
+	"keywords": [
+		"svelte",
+		"sveltekit",
+		"device",
+		"useragent",
+		"mobile",
+		"phone",
+		"tablet",
+		"detect",
+		"device",
+		"browser",
+		"smart-tv",
+		"smarttv",
+		"version",
+		"model",
+		"console"
+	  ],
+	  "repository": {
+		"type": "git",
+		"url": "git@github.com:bhaskarGyan/sveltekit-device-detector.git"
+	  },
+	  "bugs": {
+		"url": "https://github.com/bhaskarGyan/sveltekit-device-detector/issues"
+	  },
+	  "homepage": "https://github.com/bhaskarGyan/sveltekit-device-detector#readme"
 }
