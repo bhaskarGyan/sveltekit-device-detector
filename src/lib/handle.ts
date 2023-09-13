@@ -1,18 +1,19 @@
 import type { Handle } from '@sveltejs/kit';
 import { deviceDetect } from './core/detect';
+import { getSelectorsByUserAgent } from './core/selectors';
 
 export function handleDeviecDetector(
 	options: {},
 	passedHandle: Handle = async ({ event, resolve }) => resolve(event)
 ): Handle {
 	return async function handle({ event, resolve }) {
-		// Add UA logic
-        const ua = event.request.headers.get('user-agent') || '';
-        const deviceType = deviceDetect(ua);
-        event.locals.deviceType = deviceType
+		const ua = event.request.headers.get('user-agent') || '';
+		const device = deviceDetect(ua);
+		const deviceMetadata = getSelectorsByUserAgent(ua);
+		event.locals.deviceType = { ...deviceMetadata };
+
 		const response = await passedHandle({ event, resolve });
 
-		
 		return response;
 	};
 }

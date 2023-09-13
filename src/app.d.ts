@@ -4,7 +4,7 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			deviceType:DevicePayload
+			deviceType: DevicePayload;
 		}
 		// interface PageData {}
 		// interface Platform {}
