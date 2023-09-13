@@ -1,5 +1,3 @@
+export { handleDeviecDetector } from './handle';
 
-
-export {handleDeviecDetector} from './handle'
-
-export type {DevicePayload} from './types'
+export type { DevicePayload } from './types';

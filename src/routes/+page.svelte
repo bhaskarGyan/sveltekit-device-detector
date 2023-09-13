@@ -1,10 +1,12 @@
 <script lang="ts">
-		import type { PageData } from "./$types";
+	import { onMount } from 'svelte';
+	import type { PageData } from './$types';
 
-
-    export let data: PageData;
+	export let data: PageData;
+	onMount(() => {
+		console.log(data);
+	});
 </script>
-
 
 <h1>Welcome to your library project</h1>
 <p>Device type</p>

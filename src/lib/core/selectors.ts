@@ -1,7 +1,7 @@
 import * as UAHelper from './parse';
 import * as types from './types';
 import { buildSelectorsObject } from './buildSelectors';
-import type { Device,Browser, OS, Engine } from '$lib/types';
+import type { Device, Browser, OS, Engine } from '$lib/types';
 
 export const isSmartTV = types.isSmartTVType(UAHelper.device);
 export const isConsole = types.isConsoleType(UAHelper.device);
@@ -42,18 +42,18 @@ export const isIPod13 = types.getIPod13();
 export const isElectron = types.isElectronType();
 export const isEdgeChromium = types.isEdgeChromiumType(UAHelper.ua);
 export const isLegacyEdge =
-  types.isEdgeType(UAHelper.browser) && !types.isEdgeChromiumType(UAHelper.ua);
+	types.isEdgeType(UAHelper.browser) && !types.isEdgeChromiumType(UAHelper.ua);
 export const isWindows = types.isWindowsType(UAHelper.os);
 export const isMacOs = types.isMacOsType(UAHelper.os);
 export const isMIUI = types.isMIUIType(UAHelper.browser);
 export const isSamsungBrowser = types.isSamsungBrowserType(UAHelper.browser);
 
-export const getSelectorsByUserAgent = (userAgent:string) => {
-  if (!userAgent || typeof userAgent !== 'string') {
-    console.error('No valid user agent string was provided');
-    return;
-  }
+export const getSelectorsByUserAgent = (userAgent: string) => {
+	if (!userAgent || typeof userAgent !== 'string') {
+		console.error('No valid user agent string was provided');
+		return;
+	}
 
-  const { device, browser, os, engine, ua }= UAHelper.parseUserAgent(userAgent);
-  return buildSelectorsObject({ device, browser, os, engine, ua });
+	const { device, browser, os, engine, ua } = UAHelper.parseUserAgent(userAgent);
+	return buildSelectorsObject({ device, browser, os, engine, ua });
 };
