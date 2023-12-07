@@ -62,8 +62,7 @@ export const getIOS13 = () => {
 	return (
 		nav &&
 		(/iPad|iPhone|iPod/.test(nav.platform) ||
-			(nav.platform === 'MacIntel' && nav.maxTouchPoints > 1)) &&
-		!window.MSStream
+			(nav.platform === 'MacIntel' && nav.maxTouchPoints > 0))
 	);
 };
 

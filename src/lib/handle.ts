@@ -10,7 +10,7 @@ export function handleDeviecDetector(
 		const ua = event.request.headers.get('user-agent') || '';
 		const device = deviceDetect(ua);
 		const deviceMetadata = getSelectorsByUserAgent(ua);
-		event.locals.deviceType = { ...deviceMetadata,...device };
+		event.locals.deviceType = { ...deviceMetadata, ...device };
 
 		const response = await passedHandle({ event, resolve });
 
