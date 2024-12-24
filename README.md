@@ -131,12 +131,12 @@ You'll now have access to the `deviceType` data by using `$page.data.deviceType`
 > src/hooks.server.ts
 
 ```js
-import { handleDeviecDetector } from 'sveltekit-device-detector';
+import { handleDeviceDetector } from 'sveltekit-device-detector';
 
 // You can do it like this, without passing a own handle function
-export const handle = handleDeviecDetector({});
+export const handle = handleDeviceDetector({});
 
-// Or pass your handle function as second argument to handleDeviecDetector
+// Or pass your handle function as second argument to handleDeviceDetector
 
 export const handle = handleSession({}, ({ event, resolve }) => {
 	// event.locals is populated with the deviceType `event.locals.deviceType`
@@ -149,7 +149,7 @@ export const handle = handleSession({}, ({ event, resolve }) => {
 In case you're using [sequence()](https://kit.svelte.dev/docs/modules#sveltejs-kit-hooks-sequence), do this
 
 ```js
-const deviceDetector = handleDeviecDetector({});
+const deviceDetector = handleDeviceDetector({});
 export const handle = sequence(deviceDetector, ({ resolve, event }) => {
 	// event.locals is populated with the deviceType `event.locals.deviceType`
 	// Do anything you want here

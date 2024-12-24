@@ -2,7 +2,7 @@ import type { Handle } from '@sveltejs/kit';
 import { deviceDetect } from './core/detect';
 import { getSelectorsByUserAgent } from './core/selectors';
 
-export function handleDeviecDetector(
+export function handleDeviceDetector(
 	options: {},
 	passedHandle: Handle = async ({ event, resolve }) => resolve(event)
 ): Handle {
